@@ -1,3 +1,6 @@
+// @todo split queue
+// @todo isRuning
+
 export class AsyncQueue {
   private promise: Promise<any>;
 
@@ -7,9 +10,9 @@ export class AsyncQueue {
 
   add(task: () => Promise<any>) {
     return new Promise((resolve, reject) => {
-      this.promise = this.promise.then(async () => {
-        await task().then(resolve).catch(reject);
-      });
+      this.promise = this.promise.then(() =>
+        task().then(resolve).catch(reject),
+      );
     });
   }
 }
